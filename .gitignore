@@ -1,0 +1,9 @@
+# Local
+.DS_Store
+tmp
+bin
+
+# IDE files
+.idea
+.vscode
+workspace.code-workspace

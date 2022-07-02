@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: mirror-maker
+
+commonLabels:
+  environment: develop
+
+resources:
+  - https://github.com/prosimcorp/certificates-discovery.git//deploy?ref=v0.1.0
+
+patches:
+  - patch: |
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --namespace=mirror-maker
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --secret-name=product-tls
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --tls-host=kafka-bootstrap.product-tls.dev.company.com:443
+    target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: certificates-discovery

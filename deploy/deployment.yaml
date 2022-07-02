@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: certificates-discovery
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {}
+  template:
+    spec:
+      restartPolicy: Always
+      serviceAccountName: certificates-discovery-sa
+      containers:
+        - name: certificates-discovery
+          image: prosimcorp/certificates-discovery:latest
+          imagePullPolicy: Always
+          args:
+            - --connection-mode=incluster
